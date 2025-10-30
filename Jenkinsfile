@@ -3,7 +3,7 @@ pipeline {
     environment {
         IMAGE_NAME = "my-web-app"
         CONTAINER_NAME = "webapp"
-        PORT = "8081"
+        PORT = "9090"
     }
     stages {
         stage('Clone Repo') {
