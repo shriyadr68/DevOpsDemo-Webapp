@@ -3,7 +3,7 @@ pipeline {
     environment {
         IMAGE_NAME = "my-web-app"
         CONTAINER_NAME = "webapp"
-        PORT = "9090"
+        PORT = "9090"  // Updated port
     }
     stages {
         stage('Clone Repo') {
@@ -19,9 +19,9 @@ pipeline {
         stage('Cleanup Old Container') {
             steps {
                 sh '''
-                if [ "$(docker ps -q -f name=${CONTAINER_NAME})" ]; then
-                    docker stop ${CONTAINER_NAME}
-                    docker rm ${CONTAINER_NAME}
+                if [ "$(docker ps -aq -f name=${CONTAINER_NAME})" ]; then
+                    docker stop ${CONTAINER_NAME} || true
+                    docker rm ${CONTAINER_NAME} || true
                 fi
                 '''
             }
