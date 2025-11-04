@@ -5,7 +5,7 @@ pipeline {
         IMAGE_NAME = "my-web-app"
         CONTAINER_NAME = "webapp"
         PORT = "9090"
-        PATH = "/opt/sonar-scanner/bin:${env.PATH}"  // Ensure sonar-scanner is available
+        PATH = "/opt/sonar-scanner/bin:${env.PATH}"  // Ensure SonarScanner is available
     }
 
     stages {
@@ -33,7 +33,7 @@ pipeline {
 
         stage('Quality Gate') {
             steps {
-                timeout(time: 5, unit: 'MINUTES') {
+                timeout(time: 15, unit: 'MINUTES') {  // Increased timeout
                     waitForQualityGate abortPipeline: true
                 }
             }
