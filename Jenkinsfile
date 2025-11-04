@@ -5,7 +5,7 @@ pipeline {
         IMAGE_NAME = "my-web-app"
         CONTAINER_NAME = "webapp"
         PORT = "9090"
-        PATH = "/opt/sonar-scanner/bin:${env.PATH}"  // Add scanner to PATH
+        PATH = "/opt/sonar-scanner/bin:${env.PATH}"  // Ensure sonar-scanner is available
     }
 
     stages {
@@ -18,13 +18,15 @@ pipeline {
         stage('SonarQube Analysis') {
             steps {
                 withSonarQubeEnv('SonarQube') {
-                    sh '''
-                        sonar-scanner \
-                        -Dsonar.projectKey=DevOpsDemo-Webapp \
-                        -Dsonar.sources=. \
-                        -Dsonar.host.url=http://139.59.0.218:9000 \
-                        -Dsonar.login=$SONARQUBE_TOKEN
-                    '''
+                    withCredentials([string(credentialsId: 'SONARQUBE_TOKEN', variable: 'SONARQUBE_TOKEN')]) {
+                        sh '''
+                            sonar-scanner \
+                            -Dsonar.projectKey=DevOpsDemo-Webapp \
+                            -Dsonar.sources=. \
+                            -Dsonar.host.url=http://139.59.0.218:9000 \
+                            -Dsonar.login=$SONARQUBE_TOKEN
+                        '''
+                    }
                 }
             }
         }
