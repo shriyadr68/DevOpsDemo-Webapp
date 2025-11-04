@@ -9,7 +9,7 @@ pipeline {
 
     tools {
         // Use SonarQube Scanner configured in Jenkins
-        sonarQubeScanner 'SonarScanner'
+        hudson.plugins.sonar.SonarRunnerInstallation('SonarScanner')
     }
 
     stages {
