@@ -35,8 +35,10 @@ pipeline {
             steps {
                 script {
                     try {
-                        waitForQualityGate abortPipeline: false
-                        echo "Quality Gate check initiated. Pipeline will continue regardless of result."
+                        timeout(time: 1, unit: 'MINUTES') {
+                            waitForQualityGate abortPipeline: false
+                            echo "Quality Gate check initiated. Pipeline will continue regardless of result."
+                        }
                     } catch (Exception e) {
                         echo "Quality Gate check failed or timed out. Continuing pipeline..."
                     }
