@@ -5,11 +5,7 @@ pipeline {
         IMAGE_NAME = "my-web-app"
         CONTAINER_NAME = "webapp"
         PORT = "9090"
-    }
-
-    tools {
-        // Use SonarQube Scanner configured in Jenkins
-        hudson.plugins.sonar.SonarRunnerInstallation('SonarScanner')
+        PATH = "/opt/sonar-scanner/bin:${env.PATH}"  // Add scanner to PATH
     }
 
     stages {
